@@ -66,9 +66,10 @@ export class FavoritesView extends Favorites {
                 src="https://github.com/maykbrito.png"
                 alt="Imagem de maykbrito"
               />
-              <a href="https://github.com/maykbrito"></a>
+              <a href="https://github.com/maykbrito">
               <p>Mayk Brito</p>
               <span>maykbrito</span>
+              </a>
             </td>
             <td class="repositories">76</td>
             <td class="followers">9598</td>
