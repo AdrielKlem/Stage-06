@@ -1,3 +1,11 @@
+export class GithubUser {
+    static search(username) {
+        const endpoint = `https://api.github.com/users/${username}`
+
+        
+    }
+}
+
 // classe que vai conter a lógica dos dados
 // como os dados erão estruturados 
 export class Favorites {
@@ -7,25 +15,29 @@ export class Favorites {
     }
 
     load() {
-        this.entries = [{
-            login: 'maykbrito',
-            name: "Mayk Brito",
-            public_repos: '76',
-            followers: '12000'
-        }
-        ,{
-            login: 'diego3g',
-            name: "Diego Fernandes",
-            public_repos: '78',
-            followers: '12001'
-        }]
+        const entries = JSON.parse(localStorage.getItem('@github-favorites:'))
+
+        console.log(entries)
+
+        this.entries = []
+        // this.entries = [{
+        //     login: 'maykbrito',
+        //     name: "Mayk Brito",
+        //     public_repos: '76',
+        //     followers: '12000'
+        // }
+        // ,{
+        //     login: 'diego3g',
+        //     name: "Diego Fernandes",
+        //     public_repos: '78',
+        //     followers: '12001'
+        // }]
     }
 
     delete(user) {
-        const filteredEntries = this.entries.filter(entry => entry.login !== user.login)
+        this.entries = this.entries.filter(entry => entry.login !== user.login)
 
-        console.log(filteredEntries)
-        console.log(this.entries)
+        this.update()
     }
 }
 
@@ -33,9 +45,7 @@ export class Favorites {
 export class FavoritesView extends Favorites {
     constructor(root) {
         super(root)
-
         this.tbody = this.root.querySelector("table tbody")
-
         this.update()
     }
 
