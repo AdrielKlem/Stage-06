@@ -1,13 +1,4 @@
-export class GithubUser {
-    static search(username) {
-        const endpoint = `https://api.github.com/users/${username}`
-
-        return fetch(endpoint)
-        .then(data => data.json())
-        .then(({ login, name, public_repos, followers}) => ({login,name,public_repos,followers})).catch(e => console.log('encontrei erro', e))
-    }
-}
-
+import { GithubUser } from "./GithubUser.js"
 // classe que vai conter a lógica dos dados
 // como os dados erão estruturados 
 export class Favorites {
@@ -78,6 +69,7 @@ export class FavoritesView extends Favorites {
 
             row.querySelector('.user img').src = `https://github.com/${user.login}.png`
             row.querySelector('.user img').alt = `imagem de ${user.name}`
+            row.querySelector(".user a").href = `https://github.com/${user.login}`
             row.querySelector(".user p").textContent = user.name
             row.querySelector(".user span").textContent = user.login
             row.querySelector(".repositories").textContent = user.public_repos
@@ -109,16 +101,16 @@ export class FavoritesView extends Favorites {
         tr.innerHTML = `
             <td class="user">
               <img
-                src="https://github.com/maykbrito.png"
+                src="https://github.com/.png"
                 alt="Imagem de maykbrito"
               />
-              <a href="https://github.com/maykbrito">
-              <p>Mayk Brito</p>
-              <span>maykbrito</span>
+              <a href="https://github.com/" target=_blank>
+              <p></p>
+              <span></span>
               </a>
             </td>
-            <td class="repositories">76</td>
-            <td class="followers">9598</td>
+            <td class="repositories"></td>
+            <td class="followers"></td>
             <td><button class="remove">&times;</button></td>
             `
         return tr
