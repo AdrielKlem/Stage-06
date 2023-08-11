@@ -4,7 +4,7 @@ export class GithubUser {
 
         return fetch(endpoint)
         .then(data => data.json())
-        .then(({ login, name, public_repos, followers}) => ({login,name,public_repos,followers}))
+        .then(({ login, name, public_repos, followers}) => ({login,name,public_repos,followers})).catch(e => console.log('encontrei erro', e))
     }
 }
 
@@ -17,20 +17,32 @@ export class Favorites {
     }
 
     load() {
-        const entries = JSON.parse(localStorage.getItem('@github-favorites:'))
-        this.entries = []
+        this.entries = JSON.parse(localStorage.getItem('@github-favorites:')) || []
+    }
+
+    save() {
+        localStorage.setItem('@github-favorites:', JSON.stringify(this.entries))
     }
 
     async add(username) {
-        const user = await GithubUser.search(username)
-
-        console.log(user)
+        try {
+            const user = await GithubUser.search(username)
+            if(user.login === undefined) {
+                throw new Error('Usuário não encontrado!')
+            }
+            this.entries = [user, ...this.entries]
+            this.update()
+            this.save()
+        } catch(error) {
+            alert(error.message)
+        }
     }
 
     delete(user) {
         this.entries = this.entries.filter(entry => entry.login !== user.login)
 
         this.update()
+        this.save()
     }
 }
 
